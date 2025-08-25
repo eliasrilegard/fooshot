@@ -1,3 +1,4 @@
+use anyhow::Result;
 use clap::Parser;
 
 use crate::options::{CaptureMode, Cli};
@@ -8,7 +9,7 @@ mod image;
 mod options;
 mod subprocess;
 
-fn main() {
+fn main() -> Result<()> {
   let args = Cli::parse();
 
   match args.mode {
