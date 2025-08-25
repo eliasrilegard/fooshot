@@ -37,5 +37,5 @@ pub enum SaveMethod {
   Clipboard,
   Filesystem,
   Both,
-  Nothing
+  Nothing,
 }

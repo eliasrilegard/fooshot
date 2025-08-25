@@ -1,4 +1,5 @@
-use std::{io::Write, process::{Command, Stdio}};
+use std::io::Write;
+use std::process::{Command, Stdio};
 
 pub fn copy_png_to_clipboard(data: &[u8]) {
   let mut wlcopy = Command::new("wl-copy")
@@ -8,7 +9,9 @@ pub fn copy_png_to_clipboard(data: &[u8]) {
     .expect("Failed to spawn wl-copy");
 
   if let Some(mut input) = wlcopy.stdin.take() {
-    input.write_all(data).expect("Failed to write data to wl-copy");
+    input
+      .write_all(data)
+      .expect("Failed to write data to wl-copy");
   } else {
     panic!("Failed to open stdin for wl-copy");
   }

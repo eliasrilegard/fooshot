@@ -15,7 +15,7 @@ pub fn select_region() -> Option<Geometry> {
     // Selection cancelled
     return None;
   }
-  
+
   let data = str::from_utf8(&output.stdout).expect("Unexpected output: Not UTF-8");
 
   let numbers: Vec<_> = data

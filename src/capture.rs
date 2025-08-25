@@ -1,5 +1,5 @@
-use crate::options::Cli;
 use crate::image;
+use crate::options::Cli;
 use crate::subprocess::{grim, slurp};
 
 pub fn fullscreen(args: &Cli) {

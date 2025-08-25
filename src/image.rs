@@ -2,7 +2,8 @@ use std::{env, fs};
 
 use chrono::{Datelike, Local, Timelike};
 
-use crate::{options::SaveMethod, subprocess::wl_copy};
+use crate::options::SaveMethod;
+use crate::subprocess::wl_copy;
 
 pub fn save(data: &[u8], method: SaveMethod) {
   match method {
