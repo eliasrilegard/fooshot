@@ -12,6 +12,7 @@ pub fn save(data: &[u8], method: SaveMethod) {
       save_to_clipboard(data);
       save_to_filesystem(data);
     }
+    SaveMethod::Nothing => println!("Nothing saved"),
   }
 }
 
