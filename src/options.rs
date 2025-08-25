@@ -21,7 +21,7 @@ pub struct Cli {
 
   /// Suppress notifications
   #[arg(short, long)]
-  pub quiet: bool
+  pub quiet: bool,
 }
 
 #[derive(Clone, Copy, ValueEnum)]
