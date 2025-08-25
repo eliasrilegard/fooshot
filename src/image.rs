@@ -20,7 +20,10 @@ fn save_to_clipboard(_data: &[u8]) {
 }
 
 fn save_to_filesystem(data: &[u8]) {
-  let screenshot_dir = env::home_dir().unwrap_or("/".into()).join("Pictures");
+  let screenshot_dir = env::var("FOOSHOT_DIR")
+    .or_else(|_| env::var("XDG_PICTURES_DIR"))
+    .map(|x| x.into())
+    .unwrap_or(env::home_dir().unwrap_or("/".into()).join("Pictures"));
   if !screenshot_dir.exists() {
     fs::create_dir_all(&screenshot_dir).expect("Failed to create screenshot directory");
   }
