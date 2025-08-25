@@ -2,7 +2,7 @@ use std::{env, fs};
 
 use chrono::{Datelike, Local, Timelike};
 
-use crate::options::SaveMethod;
+use crate::{options::SaveMethod, subprocess::wl_copy};
 
 pub fn save(data: &[u8], method: SaveMethod) {
   match method {
@@ -15,8 +15,8 @@ pub fn save(data: &[u8], method: SaveMethod) {
   }
 }
 
-fn save_to_clipboard(_data: &[u8]) {
-  todo!()
+fn save_to_clipboard(data: &[u8]) {
+  wl_copy::copy_png_to_clipboard(data);
 }
 
 fn save_to_filesystem(data: &[u8]) {

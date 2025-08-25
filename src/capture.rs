@@ -1,5 +1,6 @@
 use crate::options::Cli;
-use crate::{grim, image};
+use crate::image;
+use crate::subprocess::grim;
 
 pub fn fullscreen(args: &Cli) {
   let data = grim::fullscreen();
