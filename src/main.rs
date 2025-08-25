@@ -4,6 +4,7 @@ use crate::options::{CaptureMode, Cli};
 
 mod capture;
 mod grim;
+mod image;
 mod options;
 
 fn main() {

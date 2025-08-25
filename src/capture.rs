@@ -1,9 +1,9 @@
-use crate::grim;
 use crate::options::Cli;
+use crate::{grim, image};
 
-pub fn fullscreen(_args: &Cli) {
+pub fn fullscreen(args: &Cli) {
   let data = grim::fullscreen();
-  println!("Got PNG data of length {:?}", data.len());
+  image::save(&data, args.save_to);
 }
 
 pub fn region(_args: &Cli) {
