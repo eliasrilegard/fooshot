@@ -1,14 +1,19 @@
 use crate::options::Cli;
 use crate::image;
-use crate::subprocess::grim;
+use crate::subprocess::{grim, slurp};
 
 pub fn fullscreen(args: &Cli) {
   let data = grim::fullscreen();
   image::save(&data, args.save_to);
 }
 
-pub fn region(_args: &Cli) {
-  println!("Region capture");
+pub fn region(args: &Cli) {
+  let Some(geometry) = slurp::select_region() else {
+    return;
+  };
+
+  let data = grim::region(geometry);
+  image::save(&data, args.save_to);
 }
 
 pub fn window(_args: &Cli) {

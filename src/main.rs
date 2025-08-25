@@ -3,6 +3,7 @@ use clap::Parser;
 use crate::options::{CaptureMode, Cli};
 
 mod capture;
+mod geometry;
 mod image;
 mod options;
 mod subprocess;
