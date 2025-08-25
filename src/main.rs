@@ -2,15 +2,16 @@ use clap::Parser;
 
 use crate::options::{CaptureMode, Cli};
 
+mod capture;
 mod options;
 
 fn main() {
   let args = Cli::parse();
 
   match args.mode {
-    CaptureMode::Fullscreen => println!("Fullscreen capture"),
-    CaptureMode::Region => println!("Region capture"),
-    CaptureMode::Window => println!("Window capture"),
-    CaptureMode::Monitor => println!("Monitor capture"),
+    CaptureMode::Fullscreen => capture::fullscreen(&args),
+    CaptureMode::Region => capture::region(&args),
+    CaptureMode::Window => capture::window(&args),
+    CaptureMode::Monitor => capture::monitor(&args),
   }
 }
