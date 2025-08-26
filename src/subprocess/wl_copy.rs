@@ -17,7 +17,9 @@ pub fn copy_png_to_clipboard(data: &[u8]) -> Result<()> {
     .write_all(data)
     .context("Failed to write data to wl-copy")?;
 
-  let output = wlcopy.wait_with_output().context("Failed to wait for wl-copy")?;
+  let output = wlcopy
+    .wait_with_output()
+    .context("Failed to wait for wl-copy")?;
   if !output.status.success() {
     let why = String::from_utf8_lossy(&output.stderr);
     anyhow::bail!("wl-copy failed with exit code {}: {}", output.status, why.trim());

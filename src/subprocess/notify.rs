@@ -1,11 +1,15 @@
-use std::{io::Write, path::Path, process::Command};
+use std::io::Write;
+use std::path::Path;
+use std::process::Command;
 
 use anyhow::{Context, Error, Result};
 use tempfile::NamedTempFile;
 
 pub fn saved_to_clipboard(data: &[u8]) -> Result<()> {
   let mut tmp = NamedTempFile::new()?;
-  tmp.write_all(data).context("Could not write temporary file")?;
+  tmp
+    .write_all(data)
+    .context("Could not write temporary file")?;
 
   let output = Command::new("notify-send")
     .args(["-a", "fooshot"]) // App name
@@ -28,7 +32,10 @@ pub fn saved_to_filesystem(location: &Path) -> Result<()> {
   let output = Command::new("notify-send")
     .args(["-a", "fooshot"])
     .arg("Screenshot saved")
-    .arg(format!("Successfully saved screenshot to {}", location.to_string_lossy()))
+    .arg(format!(
+      "Successfully saved screenshot to {}",
+      location.to_string_lossy()
+    ))
     .arg("-i")
     .arg(location)
     .output()

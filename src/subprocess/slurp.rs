@@ -22,7 +22,10 @@ pub fn select_region() -> Result<Option<Geometry>> {
 
   let numbers = data
     .split_whitespace()
-    .map(|x| x.parse::<i64>().with_context(|| format!("Failed to parse output from slurp: {}", x)))
+    .map(|x| {
+      x.parse::<i64>()
+        .with_context(|| format!("Failed to parse output from slurp: {}", x))
+    })
     .collect::<Result<Vec<_>>>()?;
 
   Ok(Some(Geometry {
