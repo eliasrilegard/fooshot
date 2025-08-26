@@ -4,6 +4,7 @@ use anyhow::{Context, Result};
 
 use crate::geometry::Geometry;
 
+/// Capture a PNG image of the entire screen
 pub fn fullscreen() -> Result<Vec<u8>> {
   let output = Command::new("grim")
     .arg("-") // stdout
@@ -18,6 +19,7 @@ pub fn fullscreen() -> Result<Vec<u8>> {
   Ok(output.stdout)
 }
 
+/// Capture a PNG image of a region with specific position and size
 pub fn region(geometry: Geometry) -> Result<Vec<u8>> {
   let output = Command::new("grim")
     .arg("-g")

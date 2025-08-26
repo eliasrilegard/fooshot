@@ -3,6 +3,7 @@ use std::process::{Command, Stdio};
 
 use anyhow::{Context, Result};
 
+/// Copy data of a PNG into the clipboard
 pub fn copy_png_to_clipboard(data: &[u8]) -> Result<()> {
   let mut wlcopy = Command::new("wl-copy")
     .args(["--type", "image/png"])

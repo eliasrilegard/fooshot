@@ -15,6 +15,7 @@ impl Drop for FreezeHandle {
   }
 }
 
+/// Freeze the screen
 pub fn freeze_screen() -> Result<FreezeHandle> {
   let child = Command::new("hyprpicker")
     .arg("--render-inactive") // Also freeze inactive displays

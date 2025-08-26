@@ -5,6 +5,7 @@ use std::process::Command;
 use anyhow::{Context, Error, Result};
 use tempfile::NamedTempFile;
 
+/// Send notification that saving to clipboard succeeded
 pub fn saved_to_clipboard(data: &[u8]) -> Result<()> {
   let mut tmp = NamedTempFile::new()?;
   tmp
@@ -28,6 +29,7 @@ pub fn saved_to_clipboard(data: &[u8]) -> Result<()> {
   Ok(())
 }
 
+/// Send notification that saving to filesystem succeeded
 pub fn saved_to_filesystem(location: &Path) -> Result<()> {
   let output = Command::new("notify-send")
     .args(["-a", "fooshot"])
@@ -49,6 +51,7 @@ pub fn saved_to_filesystem(location: &Path) -> Result<()> {
   Ok(())
 }
 
+/// Send notification that saving failed
 pub fn save_failed(err: Error) -> Result<()> {
   let output = Command::new("notify-send")
     .args(["-a", "fooshot"])

@@ -3,6 +3,7 @@ use hyprland::{data::Monitors, shared::HyprData};
 
 use crate::geometry::Geometry;
 
+/// Get coordinates of the top left corner of the monitor arrangement
 pub fn get_global_nw_coordinates() -> Result<Geometry> {
   let monitors = Monitors::get().context("Failed getting hyprland's monitors")?;
   let min_x = monitors.iter().map(|m| m.x).min().context("Monitor coordinates not found")?;

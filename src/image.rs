@@ -6,6 +6,7 @@ use chrono::{Datelike, Local, Timelike};
 use crate::options::SaveMethod;
 use crate::subprocess::{notify, wl_copy};
 
+/// Saves data to intended location
 pub fn save(data: &[u8], method: SaveMethod, quiet: bool) -> Result<()> {
   match method {
     SaveMethod::Clipboard => save_to_clipboard(data, quiet),

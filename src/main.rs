@@ -13,9 +13,9 @@ fn main() -> Result<()> {
   let args = Cli::parse();
 
   match args.mode {
-    CaptureMode::Fullscreen => capture::fullscreen(&args),
-    CaptureMode::Region => capture::region(&args),
-    CaptureMode::Window => capture::window(&args),
-    CaptureMode::Monitor => capture::monitor(&args),
+    CaptureMode::Fullscreen => capture::capture_fullscreen(&args),
+    CaptureMode::Region => capture::capture_region(&args),
+    CaptureMode::Window => capture::capture_window(&args),
+    CaptureMode::Monitor => capture::capture_monitor(&args),
   }
 }

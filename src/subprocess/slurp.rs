@@ -4,6 +4,7 @@ use anyhow::{Context, Result};
 
 use crate::geometry::Geometry;
 
+/// Use mouse to select a region on the screen
 pub fn select_region() -> Result<Option<Geometry>> {
   let output = Command::new("slurp")
     .arg("-d") // Display dimensions of selection

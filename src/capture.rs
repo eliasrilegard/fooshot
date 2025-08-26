@@ -7,12 +7,14 @@ use crate::image;
 use crate::options::Cli;
 use crate::subprocess::{grim, hyprland, hyprpicker, slurp};
 
-pub fn fullscreen(args: &Cli) -> Result<()> {
+/// Capture an image of all screens, arrangement included
+pub fn capture_fullscreen(args: &Cli) -> Result<()> {
   let bytes = grim::fullscreen()?;
   image::save(&bytes, args.save_to, args.quiet)
 }
 
-pub fn region(args: &Cli) -> Result<()> {
+/// Capture an image of a region specified with the mouse
+pub fn capture_region(args: &Cli) -> Result<()> {
   let bytes = if args.freeze {
     let data = grim::fullscreen()?;
 
@@ -48,10 +50,12 @@ pub fn region(args: &Cli) -> Result<()> {
   image::save(&bytes, args.save_to, args.quiet)
 }
 
-pub fn window(_args: &Cli) -> Result<()> {
+/// Capture an image of a specific window
+pub fn capture_window(_args: &Cli) -> Result<()> {
   todo!()
 }
 
-pub fn monitor(_args: &Cli) -> Result<()> {
+/// Capture an image of a single (whole) monitor
+pub fn capture_monitor(_args: &Cli) -> Result<()> {
   todo!()
 }
