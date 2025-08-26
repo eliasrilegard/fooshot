@@ -3,8 +3,9 @@ use std::io::Cursor;
 use ::image as image_ext;
 use anyhow::Result;
 
+use crate::geometry::Geometry;
 use crate::image;
-use crate::options::Cli;
+use crate::options::{Cli, SaveMethod};
 use crate::subprocess::{grim, hyprland, hyprpicker, slurp};
 
 /// Capture an image of all screens, arrangement included
@@ -15,13 +16,42 @@ pub fn capture_fullscreen(args: &Cli) -> Result<()> {
 
 /// Capture an image of a region specified with the mouse
 pub fn capture_region(args: &Cli) -> Result<()> {
-  let bytes = if args.freeze {
+  capture_selection(slurp::select_region, args.freeze, args.save_to, args.quiet)
+}
+
+/// Capture an image of a specific window
+pub fn capture_window(args: &Cli) -> Result<()> {
+  if args.active {
+    let geometry = hyprland::get_active_window()?;
+    let bytes = grim::region(geometry)?;
+    image::save(&bytes, args.save_to, args.quiet)
+  } else {
+    capture_selection(slurp::select_window, args.freeze, args.save_to, args.quiet)
+  }
+}
+
+/// Capture an image of a single (whole) monitor
+pub fn capture_monitor(args: &Cli) -> Result<()> {
+  if args.active {
+    let geometry = hyprland::get_active_monitor()?;
+    let bytes = grim::region(geometry)?;
+    image::save(&bytes, args.save_to, args.quiet)
+  } else {
+    capture_selection(slurp::select_monitor, args.freeze, args.save_to, args.quiet)
+  }
+}
+
+fn capture_selection<F>(select_area: F, freeze_select: bool, save_method: SaveMethod, quiet: bool) -> Result<()>
+where
+  F: Fn() -> Result<Option<Geometry>>,
+{
+  let bytes = if freeze_select {
     let data = grim::fullscreen()?;
 
     let mut geometry = {
       let _f = hyprpicker::freeze_screen()?;
 
-      let Some(geometry) = slurp::select_region()? else {
+      let Some(geometry) = select_area()? else {
         return Ok(());
       };
 
@@ -40,22 +70,12 @@ pub fn capture_region(args: &Cli) -> Result<()> {
     img.write_to(&mut Cursor::new(&mut buf), image_ext::ImageFormat::Png)?;
     buf
   } else {
-    let Some(geometry) = slurp::select_region()? else {
+    let Some(geometry) = select_area()? else {
       return Ok(());
     };
 
     grim::region(geometry)?
   };
 
-  image::save(&bytes, args.save_to, args.quiet)
-}
-
-/// Capture an image of a specific window
-pub fn capture_window(_args: &Cli) -> Result<()> {
-  todo!()
-}
-
-/// Capture an image of a single (whole) monitor
-pub fn capture_monitor(_args: &Cli) -> Result<()> {
-  todo!()
+  image::save(&bytes, save_method, quiet)
 }
