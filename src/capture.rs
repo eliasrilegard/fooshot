@@ -1,7 +1,7 @@
 use std::io::Cursor;
 
-use anyhow::Result;
 use ::image as image_ext;
+use anyhow::Result;
 
 use crate::image;
 use crate::options::Cli;
@@ -33,8 +33,8 @@ pub fn capture_region(args: &Cli) -> Result<()> {
     geometry.translate_by(nw_corner.x, nw_corner.y);
 
     // Decode + crop + re-encode
-    let img = image_ext::load_from_memory(&data)?
-      .crop_imm(geometry.x as u32, geometry.y as u32, geometry.w, geometry.h);
+    let img =
+      image_ext::load_from_memory(&data)?.crop_imm(geometry.x as u32, geometry.y as u32, geometry.w, geometry.h);
 
     let mut buf = Vec::new();
     img.write_to(&mut Cursor::new(&mut buf), image_ext::ImageFormat::Png)?;
