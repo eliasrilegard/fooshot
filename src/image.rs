@@ -16,10 +16,6 @@ pub fn save(data: &[u8], method: SaveMethod, quiet: bool) -> Result<()> {
       save_to_filesystem(data, quiet)?;
       Ok(())
     }
-    SaveMethod::Nothing => {
-      println!("Nothing saved");
-      Ok(())
-    }
   }
 }
 
