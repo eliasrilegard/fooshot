@@ -1,5 +1,9 @@
 use clap::{Parser, ValueEnum};
 
+/// A screenshot tool built for Hyprland.
+///
+/// Fooshot allows taking screenshots of regions, specific windows or entire
+/// monitors, which are saved to the clipboard and/or a folder of your choosing.
 #[derive(Parser)]
 #[command(version)]
 pub struct Cli {
@@ -22,6 +26,10 @@ pub struct Cli {
   /// Suppress notifications
   #[arg(short, long)]
   pub quiet: bool,
+
+  /// Check availability of all dependencies, then exit
+  #[arg(long)]
+  pub check: bool,
 }
 
 #[derive(Clone, Copy, ValueEnum)]
